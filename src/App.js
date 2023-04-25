@@ -1,29 +1,28 @@
 //Availability
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 // Add library
-
+import { Link, Outlet } from "react-router-dom";
 
 
 // Add file
-
+import Header from './Components/Header/Header';
 
 const App = () => {
 
   return (
-
-    <div className="App">
-
-      <header className="App-header">
-
-        <img src={logo} className="App-logo" alt="logo" />
-        <h3>Hello world reactjs</h3>
-      </header>
-
+    <div className="app-container">
+      <div className='header-container'>
+        <Header />
+      </div>
+      <div className='main-container'>
+        <div className='app-app'>
+          <Outlet />
+        </div>
+      </div>
     </div >
-
   );
+
 }
 
-export default App; 
+export default App;
