@@ -44,7 +44,7 @@ const TableUser = () => {
                 }
                 {listUser && listUser.length === 0 &&
                     <tr>
-                        <td colSpan={'4'}>No List User</td>
+                        <td colSpan={'5'}>No List User</td>
                     </tr>
                 }
             </tbody>
