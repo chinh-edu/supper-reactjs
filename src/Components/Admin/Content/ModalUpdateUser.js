@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { postCreateNewUser } from '../../../service/apiServices'
+import { postCreateNewUser } from '../../../service/apiServices';
+import _ from "lodash"
 
-const ModalCreateUser = (props) => {
+const ModalUpdateUser = (props) => {
+    const { show, setShow, dataUpdate } = props;
+
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [role, setRole] = useState('USER')
@@ -27,8 +30,20 @@ const ModalCreateUser = (props) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setIsValid(emailRegex.test(event.target.value));
     }
+    useEffect(() => {
+        console.log(`check updateData:`, dataUpdate)
+        if (!_.isEmpty(dataUpdate)) {
+            setEmail(dataUpdate.email);
+            setUsername(dataUpdate.username);
+            setRole(dataUpdate.role);
+            setImage('')
+            if (dataUpdate.image) {
+                setImagePreview(`data:image/jpeg;base64,${dataUpdate.image}`)
+            }
+        }
 
-    const { show, setShow } = props;
+    }, [dataUpdate])
+
     const handleClose = (event) => {
         setShow(false);
         setEmail('');
@@ -49,7 +64,6 @@ const ModalCreateUser = (props) => {
             return;
         }
         let data = await postCreateNewUser(email, password, username, role, image)
-        console.log(`check data:`, data)
         if (data && data.EC === 0) {
             toast.success(data.EM);
             handleClose();
@@ -69,7 +83,7 @@ const ModalCreateUser = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New User</Modal.Title>
+                    <Modal.Title>Update User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -79,11 +93,9 @@ const ModalCreateUser = (props) => {
                                 type="email"
                                 className="form-control"
                                 value={email}
+                                disabled
                                 onChange={(event) => handleOnChangeEmail(event)}
                             />
-                            {
-                                isValid === true ? <p style={{ color: 'green' }}>Email valid</p> : email.length > 0 ? <p style={{ color: 'red' }}>Email is invalid</p> : null
-                            }
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Password</label>
@@ -91,9 +103,9 @@ const ModalCreateUser = (props) => {
                                 type="password"
                                 className="form-control"
                                 value={password}
+                                disabled
                                 onChange={(event) => setPassword(event.target.value)}
                             />
-                            Please enter 6 or more characters
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Username</label>
@@ -155,4 +167,4 @@ const ModalCreateUser = (props) => {
         </>
     )
 }
-export default ModalCreateUser;
+export default ModalUpdateUser;
