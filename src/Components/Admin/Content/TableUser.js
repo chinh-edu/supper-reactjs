@@ -23,7 +23,7 @@ const TableUser = (props) => {
                                 <td>{item.email}</td>
                                 <td>{item.role}</td>
                                 <td className="btn-container" style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                                    <button className="btn btn-success">View</button>
+                                    <button className="btn btn-success" onClick={() => props.handleClickBtnView(item)}>View </button>
                                     <button className="btn btn-warning" onClick={() => props.handleClickBtnUpdate(item)}>Update</button>
                                     <button className="btn btn-danger">Delete</button>
                                 </td>

@@ -4,12 +4,12 @@ import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { postCreateNewUser } from '../../../service/apiServices';
+import { putUpdateUser } from '../../../service/apiServices';
 import _ from "lodash"
 
 const ModalUpdateUser = (props) => {
-    const { show, setShow, dataUpdate } = props;
-
+    const { show, setShow, dataUpdate, fetchListUsers } = props;
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [role, setRole] = useState('USER')
@@ -23,17 +23,10 @@ const ModalUpdateUser = (props) => {
         }
     }
 
-    const [email, setEmail] = useState('');
-    const [isValid, setIsValid] = useState(false);
-    const handleOnChangeEmail = (event) => {
-        setEmail(event.target.value)
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        setIsValid(emailRegex.test(event.target.value));
-    }
     useEffect(() => {
-        console.log(`check updateData:`, dataUpdate)
+
         if (!_.isEmpty(dataUpdate)) {
-            setEmail(dataUpdate.email);
+            setEmail(dataUpdate.email)
             setUsername(dataUpdate.username);
             setRole(dataUpdate.role);
             setImage('')
@@ -41,33 +34,21 @@ const ModalUpdateUser = (props) => {
                 setImagePreview(`data:image/jpeg;base64,${dataUpdate.image}`)
             }
         }
-
     }, [dataUpdate])
 
     const handleClose = (event) => {
         setShow(false);
-        setEmail('');
-        setPassword('');
         setUsername('');
         setRole('USER');
         setImage('')
-        setIsValid(false)
     }
 
     const handleSave = async (props) => {
-        // if (isValid === false) {
-        //     toast.error("Your email invalid");
-        //     return;
-        // }
-        if (password.length <= 5) {
-            toast.warning('Please enter your password');
-            return;
-        }
-        let data = await postCreateNewUser(email, password, username, role, image)
+        let data = await putUpdateUser(dataUpdate.id, username, role, image)
         if (data && data.EC === 0) {
             toast.success(data.EM);
             handleClose();
-            props.fetchListUsers();
+            fetchListUsers();
         } else {
             toast.error(data.EM);
         }
@@ -94,7 +75,7 @@ const ModalUpdateUser = (props) => {
                                 className="form-control"
                                 value={email}
                                 disabled
-                                onChange={(event) => handleOnChangeEmail(event)}
+                                onChange={(event) => setEmail(event.target.value)}
                             />
                         </div>
                         <div className="col-md-6">
