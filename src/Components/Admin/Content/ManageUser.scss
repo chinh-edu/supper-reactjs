@@ -10,6 +10,9 @@
         .user-table {
             width: 80%;
             margin: 30px auto;
+            .pagination {
+               justify-content: center;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ import { putUpdateUser } from '../../../service/apiServices';
 import _ from "lodash"
 
 const ModalUpdateUser = (props) => {
-    const { show, setShow, dataUpdate, fetchListUsers } = props;
+    const { show, setShow, dataUpdate, fetchListUsersWithPaginate, setCurrentPage } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -43,12 +43,12 @@ const ModalUpdateUser = (props) => {
         setImage('')
     }
 
-    const handleSave = async (props) => {
+    const handleSave = async () => {
         let data = await putUpdateUser(dataUpdate.id, username, role, image)
         if (data && data.EC === 0) {
             toast.success(data.EM);
             handleClose();
-            fetchListUsers();
+            fetchListUsersWithPaginate(props.currentPage);
         } else {
             toast.error(data.EM);
         }
