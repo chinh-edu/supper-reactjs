@@ -12,9 +12,8 @@ import { Link } from 'react-router-dom';
 import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart, FaAngleRight } from 'react-icons/fa';
 import sidebarBg from '../../assets/sidebarBg.jpg';
 import logo from '../../logo.svg'
-import ManageUser from './Content/ManageUser';
 const Sidebar = (props) => {
-    const { image, collapsed, toggled, handleToggleSidebar } = props;
+    const { collapsed, toggled, handleToggleSidebar } = props;
     return (
 
         <>

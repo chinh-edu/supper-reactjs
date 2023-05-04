@@ -1,19 +1,32 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { postLogin } from '../../service/apiServices';
+
 import './Login.scss'
+import { toast } from 'react-toastify';
 
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const handleLogin = () => {
-        alert('me')
+    const handleLogin = async () => {
+        let res = await postLogin(email, password)
+        if (res && res.EC === 0) {
+            toast.success(res.EM)
+            history('/')
+        }
+        if (res && res.EC !== 0) {
+            toast.error(res.EM)
+        }
     }
+    const history = useNavigate();
+
     return (
         <div className="container-login">
             <div className="header-login">
                 <span>Don't have an account yet?</span>
                 <button type="button" className='button-header'>Sign up</button>
-                <a href="#">Need help?</a>
+                <span className='link'>Need help?</span>
             </div>
             <div className='login-body'>
                 <h2 className="title-login">Typeform</h2>
@@ -28,9 +41,10 @@ const Login = (props) => {
                         <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
                     </div>
                     <div className='forgot-password'>
-                        <a href="#" >Forgot password</a>
+                        <span className='link'>Forgot password</span>
                     </div>
                     <button type="button" className="btn-login" onClick={() => handleLogin()}>Login to Typrform</button>
+                    <button type='button' className='btn-goback' onClick={() => { history('/') }}>Go to Home Page</button>
                 </div>
             </div>
         </div>

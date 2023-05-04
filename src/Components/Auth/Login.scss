@@ -2,7 +2,7 @@
     padding: 20px;
     .header-login {
         display: flex;
-        justify-content: right;
+        justify-content: flex-end;
         gap: 8px;
         align-items: center;
         .button-header {
@@ -12,7 +12,7 @@
         }
     }
     .login-body {
-        width: 300px;
+        width: 400px;
         margin: 0 auto;
         padding: 12px 24px;
         text-align: center;
@@ -45,12 +45,25 @@
                     color: #333;
                 }
             }
-            .btn-login {
+            .btn-login, .btn-goback {
                 width: 100%;
                 padding: 6px 0;
                 background: #000;
                 color: #fff;
             }
+            .btn-goback {
+                margin-top: 20px;
+            }
+            .btn-login:hover, .btn-goback:hover {
+                background-color: #333;
+            }
+            
         }
+    }
+    .link {
+        text-decoration: underline;
+        cursor: pointer;
+        color: rgb(5, 84, 58);
+        font-weight: 600;
     }
 }

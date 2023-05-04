@@ -2,8 +2,7 @@
 import './App.scss';
 
 // Add library
-import { Link, Outlet } from "react-router-dom";
-
+import { Outlet } from "react-router-dom";
 
 // Add file
 import Header from './Components/Header/Header';
@@ -20,6 +19,7 @@ const App = () => {
           <Outlet />
         </div>
       </div>
+
     </div >
   );
 
