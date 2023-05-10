@@ -1,6 +1,8 @@
-import videoHomepage from '../../assets/video-homepage.mp4'
+import videoHomepage from '../../assets/video-homepage.mp4';
+
 
 const Hompage = (props) => {
+
     return (
         <div className="homepage-container">
             <video autoPlay muted loop className='video' >

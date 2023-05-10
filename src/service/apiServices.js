@@ -32,4 +32,7 @@ const getUserWithPaginateUsers = (page, limit) => {
 const postLogin = (email, password) => {
     return axios.post(`api/v1/login`, { email, password })
 }
-export { postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin }
+const postRegistar = (email, password, username) => {
+    return axios.post(`api/v1/register`, { email, password, username })
+}
+export { postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin, postRegistar }
