@@ -51,6 +51,28 @@
                 background: #000;
                 color: #fff;
             }
+            .btn-login {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                &:disabled {
+                    background-color: #cccccc;
+                    color: #afafaf;
+                    cursor: no-drop;
+                }
+                .loaderIcon {
+                    animation: spin 2s infinite linear;
+                }
+                @keyframes spin {
+                    from {
+                        transform: scale(1) rotate(0deg);
+                    }
+                    to {
+                        transform: scale(1) rotate(360deg);
+                    }
+                }
+            }
             .btn-goback {
                 margin-top: 20px;
             }

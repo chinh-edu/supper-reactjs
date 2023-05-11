@@ -5,22 +5,30 @@ import './Login.scss'
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/useAction';
-
+import { ImSpinner10 } from 'react-icons/im';
 
 const Login = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false)
     const handleLogin = async () => {
-        let res = await postLogin(email, password)
+        if (!email && !password) {
+            toast.error(`Please enter your  value`);
+            return;
+        }
+        setIsLoading(true);
+        let res = await postLogin(email, password);
         if (res && res.EC === 0) {
-            dispatch(doLogin(res))
-            toast.success(res.EM)
-            navigate('/')
+            dispatch(doLogin(res));
+            toast.success(res.EM);
+            setIsLoading(false);
+            navigate('/');
         }
         if (res && res.EC !== 0) {
-            toast.error(res.EM)
+            toast.error(res.EM);
+            setIsLoading(false);
         }
     }
 
@@ -47,7 +55,10 @@ const Login = (props) => {
                     <div className='forgot-password'>
                         <span className='link'>Forgot password</span>
                     </div>
-                    <button type="button" className="btn-login" onClick={() => handleLogin()}>Login to Typrform</button>
+                    <button type="button" className="btn-login" onClick={() => handleLogin()} disabled={isLoading} >
+                        {isLoading === true && <ImSpinner10 className='loaderIcon' />}
+                        <span>Login to Typrform</span>
+                    </button>
                     <button type='button' className='btn-goback' onClick={() => { navigate('/') }}>Go to Home Page</button>
                 </div>
             </div>
