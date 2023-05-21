@@ -1,5 +1,4 @@
 import App from './App';
-import User from './Components/User/User';
 import Admin from './Components/Admin/Admin';
 import Hompage from './Components/Home/Homepage';
 import ManageUser from './Components/Admin/Content/ManageUser';
@@ -8,13 +7,14 @@ import Login from './Components/Auth/Login';
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import Register from './Components/Auth/Register';
+import ListQuiz from './Components/User/ListQuiz';
 const Layout = (props) => {
     return (
         <>
             <Routes>
                 <Route path='/' element={<App />}>
                     <Route index element={<Hompage />} />
-                    <Route path='user' element={<User />} />
+                    <Route path='user' element={<ListQuiz />} />
                 </Route>
                 <Route path='/admin' element={<Admin />}>
                     <Route index element={<DashBoard />} />

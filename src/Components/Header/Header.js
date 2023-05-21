@@ -4,12 +4,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const account = useSelector(state => state.user.account);
-
-    console.log(`account:`, account, `isAuthenticated:`, isAuthenticated);
+    const navigate = useNavigate()
     return (
         <Navbar expand="lg" bg="light">
             <Container>
@@ -30,7 +30,7 @@ const Header = () => {
                             </>
                             :
                             <NavDropdown title="Setting" id="basic-nav-dropdown">
-                                <NavDropdown.Item>Log out</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => navigate('/login')}>Log out</NavDropdown.Item>
                                 <NavDropdown.Item>Profile</NavDropdown.Item>
                             </NavDropdown>
                         }

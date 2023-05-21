@@ -15,7 +15,6 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case FEATCH_USER_LOGIN_SUCCESS:
-            console.log(`check actions:`, action)
             return {
                 ...state, account: {
                     access_token: action?.payload?.DT?.access_token,
