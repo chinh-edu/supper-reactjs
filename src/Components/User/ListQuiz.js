@@ -2,6 +2,8 @@ import { useState } from "react";
 import { getQuizByUser } from '../../service/apiServices'
 import { useEffect } from "react";
 import './ListQuiz.scss';
+import { useNavigate } from "react-router-dom";
+
 
 const ListQuiz = (props) => {
     const [arrQuiz, setArrQuiz] = useState([]);
@@ -15,6 +17,7 @@ const ListQuiz = (props) => {
             setArrQuiz(data.DT)
         }
     };
+    const navigate = useNavigate()
     return (
         <div className="list-quiz-container container">
             {arrQuiz && arrQuiz.length > 0 &&
@@ -25,12 +28,13 @@ const ListQuiz = (props) => {
                             <div className="card-body">
                                 <h5 className="card-title">Quiz {index + 1}</h5>
                                 <p className="card-text">{quiz.description}</p>
-                                <button className="btn btn-primary">Start Now</button>
+                                <button className="btn btn-primary" onClick={() => navigate(`/quiz/${quiz.id}`)}>Start Now</button>
                             </div>
                         </div>
                     )
                 })
             }
+
             {arrQuiz && arrQuiz.length === 0 &&
                 <div>
                     You don't have any quiz now...
