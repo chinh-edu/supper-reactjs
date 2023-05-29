@@ -3,11 +3,24 @@ import { getDataQuiz } from "../../service/apiServices";
 import { useEffect } from "react";
 import _ from 'lodash';
 import './DetailQuiz.scss'
+import Question from "./Question";
+import { useState } from "react";
 
 const DetailQuiz = (props) => {
     const params = useParams();
     const location = useLocation();
     const quizId = params.id;
+    const [question, setQuestion] = useState([]);
+    const [index, setIndex] = useState(0);
+    const handleBack = () => {
+        if (index - 1 < 0) return;
+
+        setIndex(index - 1)
+    };
+    const handleNext = () => {
+        if (question && question.length > index + 1)
+            setIndex(index + 1)
+    }
     useEffect(() => {
         fetchQuestion()
     }, [quizId]);
@@ -32,9 +45,11 @@ const DetailQuiz = (props) => {
                     )
                 })
                 .value()
+            console.log(`check data:`, data)
+            setQuestion(data)
         }
     }
-
+    console.log(`check question:`, question)
     return (
         <div className="detail-quiz-container">
             <div className="detail-quiz-content__left">
@@ -49,33 +64,16 @@ const DetailQuiz = (props) => {
                         <div className="q-body-part__child"><span>Part 1</span></div>
                         <div className="q-body-part__child"><span>Part 1</span></div>
                     </div>
-                    <div className="q-body-request">
-                        Look at the picture and listen to the sentences. Choose the sentence that best describes the picture:
-                    </div>
-                    <div className="q-body-img">
-                        <img src="https://www.anhngumshoa.com/uploads/images/resize/550x550/test/11.jpg" />
-                    </div>
                 </div>
                 <div className="q-content">
-                    <div className="number-question">Question 1</div>
-                    <div className="answer-select">
-                        <label>
-                            <input type="radio" name="" value="" />
-                            <strong>A</strong>
-                        </label>
-                        <label>
-                            <input type="radio" name="" value="" />
-                            <strong>B</strong>
-                        </label>
-                        <label>
-                            <input type="radio" name="" value="" />
-                            <strong>C</strong>
-                        </label>
-                    </div>
+                    <Question
+                        question={question && question.length > 0 ? question[index] : []}
+                        index={index}
+                    />
                 </div>
                 <div className="q-footer">
-                    <button type="button">BACK</button>
-                    <button type="button">NEXT</button>
+                    <button type="button" onClick={() => handleBack()}>BACK</button>
+                    <button type="button" onClick={() => handleNext()}>NEXT</button>
                 </div>
             </div>
             <div className="detail-quiz-content__right">

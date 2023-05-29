@@ -11,10 +11,10 @@ const ListQuiz = (props) => {
         getQuizData();
     }, []);
     const getQuizData = async () => {
-        const data = await getQuizByUser();
-        console.log(`check data:`, data)
-        if (data && data.EC === 0) {
-            setArrQuiz(data.DT);
+        const array = await getQuizByUser();
+        console.log(`check array:`, array)
+        if (array && array.EC === 0) {
+            setArrQuiz(array.DT);
         }
     };
     const navigate = useNavigate();

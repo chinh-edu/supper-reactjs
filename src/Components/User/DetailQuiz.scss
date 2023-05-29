@@ -10,7 +10,7 @@
     .detail-quiz-content__left {
         width: 70%;
         .q-body {
-            margin-top: 36px;
+            margin: 36px 0;
             .q-body-part{
                 display: flex;
                 gap: 12px;
@@ -29,19 +29,12 @@
                     color: #fff;
                 }
             }
-            .q-body-request {
-                margin-top: 20px;
-                font-size: 16px;
-                padding: 6px 12px;
-                border: .5px solid #999;
-                font-weight: 600;
-            }
-            .q-body-img {
-                margin-top: 26px;
-                text-align: center;
-            }
         }
         .q-content {
+            .q-body-img {
+                margin: 26px 0;
+                text-align: center;
+            }
             .number-question {
                 font-weight: 600;
             }
