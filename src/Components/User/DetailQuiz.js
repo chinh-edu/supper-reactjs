@@ -12,6 +12,7 @@ const DetailQuiz = (props) => {
     const quizId = params.id;
     const [question, setQuestion] = useState([]);
     const [index, setIndex] = useState(0);
+
     const handleBack = () => {
         if (index - 1 < 0) return;
 
@@ -20,6 +21,23 @@ const DetailQuiz = (props) => {
     const handleNext = () => {
         if (question && question.length > index + 1)
             setIndex(index + 1)
+    };
+    const handleCheckBox = (answerId, questionId) => {
+        let dataQuizClone = _.cloneDeep(question);
+        let questionName = dataQuizClone.find(item => +item.questionId === +questionId); //convers chuỗi string qua dạng number
+        if (questionName && questionName.answers) {
+            questionName.answers = questionName.answers.map(item => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected
+                }
+                return item
+            });
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionId === +questionId);
+        if (index > -1) {
+            dataQuizClone[index] = questionName;
+            setQuestion(dataQuizClone);
+        }
     }
     useEffect(() => {
         fetchQuestion()
@@ -38,6 +56,7 @@ const DetailQuiz = (props) => {
                             questionDescription = item.description;
                             image = item.image;
                         }
+                        item.answers.isSelected = false // add isSelected = false
                         answers.push(item.answers);
                     })
                     return (
@@ -45,11 +64,34 @@ const DetailQuiz = (props) => {
                     )
                 })
                 .value()
-            console.log(`check data:`, data)
             setQuestion(data)
         }
     }
-    console.log(`check question:`, question)
+    const handleFinishQuiz = () => {
+        console.log(`check data before submit:`, question);
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        };
+        let answers = [];
+        if (question && question.length > 0) {
+            question.forEach(item => {
+                let questionId = item.questionId;
+                let userAnswerId = [];
+                item.answers.forEach(a => {
+                    if (a.isSelected === true) {
+                        userAnswerId.push(a.id)
+                    }
+                })
+                answers.push({
+                    questionId: +questionId,
+                    userAnswerId: userAnswerId
+                })
+            })
+            payload.answers = answers;
+            console.log(`final payload:`, payload)
+        }
+    }
     return (
         <div className="detail-quiz-container">
             <div className="detail-quiz-content__left">
@@ -67,6 +109,7 @@ const DetailQuiz = (props) => {
                 </div>
                 <div className="q-content">
                     <Question
+                        handleCheckBox={handleCheckBox}
                         question={question && question.length > 0 ? question[index] : []}
                         index={index}
                     />
@@ -74,6 +117,7 @@ const DetailQuiz = (props) => {
                 <div className="q-footer">
                     <button type="button" onClick={() => handleBack()}>BACK</button>
                     <button type="button" onClick={() => handleNext()}>NEXT</button>
+                    <button type="button" onClick={() => handleFinishQuiz()}>FINISH</button>
                 </div>
             </div>
             <div className="detail-quiz-content__right">
