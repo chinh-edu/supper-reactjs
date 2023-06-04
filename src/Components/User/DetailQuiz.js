@@ -1,10 +1,11 @@
 import { useParams, useLocation } from "react-router-dom";
-import { getDataQuiz } from "../../service/apiServices";
+import { getDataQuiz, postSubmitQuiz } from "../../service/apiServices";
 import { useEffect } from "react";
 import _ from 'lodash';
 import './DetailQuiz.scss'
 import Question from "./Question";
 import { useState } from "react";
+import ModalResult from "./ModalResult";
 
 const DetailQuiz = (props) => {
     const params = useParams();
@@ -12,6 +13,8 @@ const DetailQuiz = (props) => {
     const quizId = params.id;
     const [question, setQuestion] = useState([]);
     const [index, setIndex] = useState(0);
+    const [isShowModalResult, setIsShowModelResult] = useState(false);
+    const [dataModalResult, setDataModalResult] = useState(0)
 
     const handleBack = () => {
         if (index - 1 < 0) return;
@@ -67,8 +70,7 @@ const DetailQuiz = (props) => {
             setQuestion(data)
         }
     }
-    const handleFinishQuiz = () => {
-        console.log(`check data before submit:`, question);
+    const handleFinishQuiz = async () => {
         let payload = {
             quizId: +quizId,
             answers: []
@@ -89,7 +91,19 @@ const DetailQuiz = (props) => {
                 })
             })
             payload.answers = answers;
-            console.log(`final payload:`, payload)
+            //submit API
+            let res = await postSubmitQuiz(payload);
+            console.log(`check res:`, res);
+            if (res && res.EC === 0) {
+                setDataModalResult({
+                    countCorrect: res.DT?.countCorrect,
+                    countTotal: res.DT?.countTotal,
+                    quizData: res.DT?.quizData
+                })
+                setIsShowModelResult(true);
+            } else {
+                alert(`Some thing wrong:... `)
+            }
         }
     }
     return (
@@ -123,6 +137,11 @@ const DetailQuiz = (props) => {
             <div className="detail-quiz-content__right">
                 RIGHT CONTENT
             </div>
+            <ModalResult
+                show={isShowModalResult}
+                setShow={setIsShowModelResult}
+                dataModalResult={dataModalResult}
+            />
         </div>
     )
 }
