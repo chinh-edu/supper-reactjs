@@ -25,24 +25,34 @@ const Sidebar = (props) => {
                 onToggle={handleToggleSidebar}
             >
                 <SidebarHeader>
-                    <img src={logo} style={{
-                        width: '48px',
-                    }} />
-                    <div
+                    <Link to='/'
                         style={{
-                            color: '#00bfff',
-                            padding: '24px 0px',
-                            textTransform: 'uppercase',
-                            fontWeight: 'bold',
-                            fontSize: 14,
-                            letterSpacing: '1px',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
+                            display: "flex",
+                            textDecoration: "none",
+                            alignItems: 'center'
                         }}
                     >
-                        CHI NGUYEN BLOG
-                    </div>
+                        <img src={logo}
+                            style={{
+                                width: '48px',
+                            }}
+                        />
+                        <div
+                            style={{
+                                color: '#00bfff',
+                                padding: '24px 0px',
+                                textTransform: 'uppercase',
+                                fontWeight: 'bold',
+                                fontSize: 14,
+                                letterSpacing: '1px',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                            }}
+                        >
+                            CHI NGUYEN BLOG
+                        </div>
+                    </Link>
                 </SidebarHeader>
 
                 <SidebarContent>
@@ -66,7 +76,9 @@ const Sidebar = (props) => {
                                 Quản lý user
                                 <Link to="/admin/manage-user" />
                             </MenuItem>
-                            <MenuItem>Quản lý bài Quiz</MenuItem>
+                            <MenuItem>Quản lý bài Quiz
+                                <Link to="/admin/manage-quiz" />
+                            </MenuItem>
                             <MenuItem>Quản lý câu hỏi</MenuItem>
                         </SubMenu>
 

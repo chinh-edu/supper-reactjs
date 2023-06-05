@@ -93,7 +93,6 @@ const DetailQuiz = (props) => {
             payload.answers = answers;
             //submit API
             let res = await postSubmitQuiz(payload);
-            console.log(`check res:`, res);
             if (res && res.EC === 0) {
                 setDataModalResult({
                     countCorrect: res.DT?.countCorrect,
