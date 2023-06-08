@@ -52,4 +52,7 @@ const postQuizToSever = (description, name, difficulty, quizImage) => {
     data.append('quizImage', quizImage);
     return axios.post('api/v1/quiz', data);
 }
-export { postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin, postRegistar, getQuizByUser, getDataQuiz, postSubmitQuiz, postQuizToSever } 
+const tableSocialQuiz = () => {
+    return axios.get(`api/v1/quiz/all`)
+}
+export { postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin, postRegistar, getQuizByUser, getDataQuiz, postSubmitQuiz, postQuizToSever, tableSocialQuiz } 
