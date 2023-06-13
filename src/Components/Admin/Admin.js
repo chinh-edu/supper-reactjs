@@ -3,6 +3,7 @@ import './Admin.scss'
 import { FaBars } from 'react-icons/fa'
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const Admin = (props) => {
     const [isCollaped, setIsCollaped] = useState(false)
@@ -12,14 +13,16 @@ const Admin = (props) => {
             <div className="admin-sidebar">
                 <Sidebar collapsed={isCollaped} />
             </div>
-            <div className="admin-content">
-                <div className="admin-header">
-                    <FaBars onClick={() => setIsCollaped(!isCollaped)} />
+            <PerfectScrollbar style={{ flex: 1 }}>
+                <div className="admin-content" >
+                    <div className="admin-header">
+                        <FaBars onClick={() => setIsCollaped(!isCollaped)} />
+                    </div>
+                    <div className="admin-main">
+                        <Outlet />
+                    </div>
                 </div>
-                <div className="admin-main">
-                    <Outlet />
-                </div>
-            </div>
+            </PerfectScrollbar>
         </div>
     )
 }

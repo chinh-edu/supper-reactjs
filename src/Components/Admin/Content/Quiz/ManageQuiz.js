@@ -7,7 +7,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import TableQuiz from './TableQuiz';
 import { tableSocialQuiz } from '../../../../service/apiServices'
 import DeleteQuiz from './DeleteQuiz';
-
+import { deleteQuizToServer } from '../../../../service/apiServices'
 
 const ManageQuiz = (props) => {
     const [tableQuiz, setTableQuiz] = useState([]);
@@ -53,8 +53,10 @@ const ManageQuiz = (props) => {
 
     const [showQuizDeleteUser, setShowQuizDeleteUser] = useState(false);
     const [dataDeleteQuiz, setDataDeleteQuiz] = useState({});
-    const handleClickDeleteQuiz = () => {
-        setShowQuizDeleteUser(true)
+    const handleClickDeleteQuiz = async () => {
+        setShowQuizDeleteUser(true);
+        // let res = await deleteQuizToServer(dataDeleteQuiz.id);
+        // console.log(`check res delete:`, res)
     }
     return (
         <div className="quiz-container p-2">

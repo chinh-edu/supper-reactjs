@@ -53,6 +53,9 @@ const postQuizToSever = (description, name, difficulty, quizImage) => {
     return axios.post('api/v1/quiz', data);
 }
 const tableSocialQuiz = () => {
-    return axios.get(`api/v1/quiz/all`)
+    return axios.get(`api/v1/quiz/all`);
 }
+// const deleteQuizToServer = (id) => {
+//     return axios.delete(`api/v1/quiz/${id}`)
+// }
 export { postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin, postRegistar, getQuizByUser, getDataQuiz, postSubmitQuiz, postQuizToSever, tableSocialQuiz } 

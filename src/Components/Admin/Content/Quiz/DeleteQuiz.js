@@ -6,6 +6,7 @@ const DeleteQuiz = (props) => {
     const handleClose = () => {
         setShow(false)
     }
+
     return (
         <Modal show={show}>
             <Modal.Header>

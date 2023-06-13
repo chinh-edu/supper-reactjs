@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc'
 import 'react-toastify/dist/ReactToastify.css';
-import _ from "lodash"
+import _ from "lodash";
 
 const ModalViewUser = (props) => {
     const { show, setShow, dataView } = props;
