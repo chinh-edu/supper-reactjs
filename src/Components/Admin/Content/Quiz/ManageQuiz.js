@@ -5,7 +5,7 @@ import { postQuizToSever } from '../../../../service/apiServices';
 import { toast } from 'react-toastify';
 import Accordion from 'react-bootstrap/Accordion';
 import TableQuiz from './TableQuiz';
-import { tableSocialQuiz } from '../../../../service/apiServices'
+import { tableSocialQuiz } from '../../../../service/apiServices';
 import DeleteQuiz from './DeleteQuiz';
 import { deleteQuizToServer } from '../../../../service/apiServices'
 

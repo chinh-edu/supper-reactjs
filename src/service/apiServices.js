@@ -21,7 +21,7 @@ const putUpdateUser = (id, username, role, image) => {
     data.append('role', role);
     data.append('userImage', image);
     return axios.put('api/v1/participant', data);
-}
+};
 
 const deleteUsers = (id) => {
     return axios.delete('api/v1/participant', { data: { id: id } });
@@ -31,19 +31,19 @@ const getUserWithPaginateUsers = (page, limit) => {
 };
 const postLogin = (email, password) => {
     return axios.post(`api/v1/login`, { email, password, delay: 5000 })
-}
+};
 const postRegistar = (email, password, username) => {
     return axios.post(`api/v1/register`, { email, password, username })
-}
+};
 const getQuizByUser = () => {
     return axios.get(`/api/v1/quiz-by-participant`);
-}
+};
 const getDataQuiz = (id) => {
     return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
-}
+};
 const postSubmitQuiz = (data) => {
     return axios.post(`/api/v1/quiz-submit`, { ...data })
-}
+};
 const postQuizToSever = (description, name, difficulty, quizImage) => {
     const data = new FormData();
     data.append('description', description);
@@ -51,11 +51,26 @@ const postQuizToSever = (description, name, difficulty, quizImage) => {
     data.append('difficulty', difficulty);
     data.append('quizImage', quizImage);
     return axios.post('api/v1/quiz', data);
-}
+};
 const tableSocialQuiz = () => {
     return axios.get(`api/v1/quiz/all`);
-}
+};
 // const deleteQuizToServer = (id) => {
 //     return axios.delete(`api/v1/quiz/${id}`)
 // }
-export { postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin, postRegistar, getQuizByUser, getDataQuiz, postSubmitQuiz, postQuizToSever, tableSocialQuiz } 
+const postCreateQuestionForQuiz = (quiz_id, description, questionImage) => {
+    return axios.post(`api/v1/question`, {
+        quiz_id, description, questionImage
+    });
+};
+const postCreateAnswerForQuiz = (description, correct_answer, question_id) => {
+    return axios.post(`api/v1/answer`, {
+        description, correct_answer, question_id
+    });
+};
+
+export {
+    postCreateNewUser, putUpdateUser, deleteUsers, getUserWithPaginateUsers, postLogin,
+    postRegistar, getQuizByUser, getDataQuiz, postSubmitQuiz, postQuizToSever, tableSocialQuiz,
+    postCreateQuestionForQuiz, postCreateAnswerForQuiz
+} 

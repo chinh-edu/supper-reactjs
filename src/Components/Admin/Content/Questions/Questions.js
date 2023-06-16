@@ -1,17 +1,37 @@
 import Select from 'react-select';
 import { BsFillPatchPlusFill, BsFillPatchMinusFill } from 'react-icons/bs';
 import { RiImageAddFill, RiQuestionMark } from 'react-icons/ri'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
+import { tableSocialQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuiz } from '../../../../service/apiServices';
 
 const Questions = () => {
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ];
+    const [zoomed, setZoomed] = useState(false);
+    const [dataImage, setDataImage] = useState({
+        imgUrl: '',
+        title: ''
+    });
+    const [selectedQuiz, setSelectedQuiz] = useState({});
+    const [listQuiz, setLizQuiz] = useState([]);
+    useEffect(() => {
+        getQuizToTable();
+    }, [])
+    const getQuizToTable = async () => {
+        let res = await tableSocialQuiz();
+        if (res && res.EC === 0) {
+            let newListQuiz = res.DT.map(item => {
+                return {
+                    value: item.id,
+                    label: `${item.id} - ${item.description}`
+                }
+            });
+            setLizQuiz(newListQuiz);
+        }
+    }
+    // console.log(`check selectedQuiz:`, selectedQuiz)
     const [questions, setQuestions] = useState(
         [
             {
@@ -133,16 +153,41 @@ const Questions = () => {
                 setQuestions(questionsClone);
             }
         }
-    }
-    const handleSubmitQuestionForQuiz = () => {
-        console.log(`check list question:`, questions);
-    }
+    };
+    const handleShowImage = (questionId) => {
+        let questionsClone = _.cloneDeep(questions);
+        let index = questionsClone.findIndex(item => item.id === questionId);
+        if (index > -1) {
+            setDataImage({
+                imgUrl: URL.createObjectURL(questions[index].imageFile),
+                title: questions[index].imageName
+            });
+            setZoomed(true);
+        }
+    };
+    const handleSubmitQuestionForQuiz = async () => {
+        console.log(`check question: `, questions);
+
+        await Promise.all(questions.map(async (question) => {
+            const contentsQuestion = await postCreateQuestionForQuiz(+selectedQuiz.value, question.description, question.imageFile);
+            await Promise.all(question.answers.map(async (answer) => {
+                let a = await postCreateAnswerForQuiz(answer.description, answer.isCorrect, contentsQuestion.DT.id);
+                console.log(`check a:`, a);
+            }))
+
+            console.log(`check contents:`, contentsQuestion);
+        }));
+
+    };
     return (
         <div className="managequestion-container">
             <h3>Manage Question</h3>
             <div className="select-quiz col-6 mt-3">
                 <label>Select Quiz</label>
-                <Select options={options} />
+                <Select
+                    defaultValue={selectedQuiz}
+                    onChange={setSelectedQuiz}
+                    options={listQuiz} />
             </div>
             <div className='mt-3'>Add question</div>
             {questions && questions.length > 0 &&
@@ -166,7 +211,7 @@ const Questions = () => {
                                         />
                                         <label>Question {index + 1} 's description</label>
                                     </div>
-                                    <div className='upload-image'>
+                                    <div className='upload-image' style={{ display: 'flex', justifyContent: 'center' }}>
                                         <label htmlFor={`${item.id}`}>
                                             <RiImageAddFill
                                                 style={{
@@ -183,7 +228,7 @@ const Questions = () => {
                                             id={`${item.id}`}
                                             onChange={(event) => handleOnChangeFileQuestion(item.id, event)}
                                         ></input>
-                                        <span>{item.imageFile ? item.imageName : `0 file uploaded`}</span>
+                                        <span>{item.imageFile ? <div onClick={() => handleShowImage(item.id)}>{item.imageName}</div> : `0 file uploaded`}</span>
                                     </div>
                                     <div className="add-remove-question-icon ">
                                         <BsFillPatchPlusFill
@@ -264,7 +309,6 @@ const Questions = () => {
                                     )
                                 })
                             }
-
                         </div>
                     )
                 })}
@@ -277,6 +321,14 @@ const Questions = () => {
                     >Save question</button>
                 </div>
             }
+            {zoomed &&
+                <Lightbox
+                    image={dataImage.imgUrl}
+                    title={dataImage.title}
+                    onClose={() => setZoomed(false)}
+                />
+            }
+
         </div>
     )
 }
