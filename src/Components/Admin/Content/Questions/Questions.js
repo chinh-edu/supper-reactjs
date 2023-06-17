@@ -72,6 +72,44 @@ const Questions = () => {
             }
         ]
     );
+    const initQuestion = [
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                },
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                },
+            ]
+        },
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                },
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                },
+            ]
+        }
+    ]
     const handleAddRemoveQuestion = (type, id) => {
         let questionsClone = _.cloneDeep(questions);
         if (type === "ADD") {
@@ -166,18 +204,52 @@ const Questions = () => {
         }
     };
     const handleSubmitQuestionForQuiz = async () => {
-        console.log(`check question: `, questions);
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error(`Please choose quiz`);
+            return;
+        };
 
-        await Promise.all(questions.map(async (question) => {
+        let indexQ = 0;
+        //validate answer
+        let indexA = 0;
+        let isValidAnswer = true;
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (!questions[i].answers[j].description) {
+                    isValidAnswer = false;
+                    indexA = j;
+                    break;
+                }
+            }
+            indexQ = i;
+            if (isValidAnswer === false) break;
+        };
+        if (isValidAnswer === false) {
+            toast.error(`Not empty answer ${indexA + 1} at question ${indexQ + 1}`);
+            return;
+        };
+        //validate question
+        let isValidQuestion = true;
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
+                isValidQuestion = false;
+                indexQ = i;
+                break;
+            }
+        }
+        if (isValidQuestion === false) {
+            toast.error(`Not empty question ${indexQ + 1}`);
+            return;
+        }
+        //call API
+        for (const question of questions) {
             const contentsQuestion = await postCreateQuestionForQuiz(+selectedQuiz.value, question.description, question.imageFile);
-            await Promise.all(question.answers.map(async (answer) => {
-                let a = await postCreateAnswerForQuiz(answer.description, answer.isCorrect, contentsQuestion.DT.id);
-                console.log(`check a:`, a);
-            }))
-
-            console.log(`check contents:`, contentsQuestion);
-        }));
-
+            for (const answer of question.answers) {
+                await postCreateAnswerForQuiz(answer.description, answer.isCorrect, contentsQuestion.DT.id);
+            }
+        }
+        toast.success(`Create question and answer succed`);
+        setQuestions(initQuestion);
     };
     return (
         <div className="managequestion-container">
