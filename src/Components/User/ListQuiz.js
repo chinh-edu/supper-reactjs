@@ -12,7 +12,6 @@ const ListQuiz = (props) => {
     }, []);
     const getQuizData = async () => {
         const array = await getQuizByUser();
-        console.log(`check array quiz:`, array)
         if (array && array.EC === 0) {
             setArrQuiz(array.DT);
         }
@@ -24,7 +23,7 @@ const ListQuiz = (props) => {
             {arrQuiz && arrQuiz.length > 0 &&
                 arrQuiz.map((quiz, index) => {
                     return (
-                        <div className="card" style={{ width: "18rem", marginTop: "100px" }} key={quiz.id}>
+                        <div className="card" style={{ marginTop: "100px" }} key={quiz.id}>
                             <img src={`data:image/jpeg;base64,${quiz.image}`} className="card-img-top" alt="..." />
                             <div className="card-body">
                                 <h5 className="card-title">Quiz {index + 1}</h5>

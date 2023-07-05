@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import './ManageQuiz.scss';
 import Select from 'react-select';
 import { postQuizToSever } from '../../../../service/apiServices';
 import { toast } from 'react-toastify';
 import Accordion from 'react-bootstrap/Accordion';
 import TableQuiz from './TableQuiz';
 import { tableSocialQuiz } from '../../../../service/apiServices';
-import DeleteQuiz from './DeleteQuiz';
-import { deleteQuizToServer } from '../../../../service/apiServices'
+import UpdateQa from './UpdateQa';
+import AssignToUsers from './AssignToUsers';
+// import DeleteQuiz from './DeleteQuiz';
+// import { deleteQuizToServer } from '../../../../service/apiServices'
 
 const ManageQuiz = (props) => {
     const [tableQuiz, setTableQuiz] = useState([]);
@@ -51,13 +52,13 @@ const ManageQuiz = (props) => {
     }
 
 
-    const [showQuizDeleteUser, setShowQuizDeleteUser] = useState(false);
-    const [dataDeleteQuiz, setDataDeleteQuiz] = useState({});
-    const handleClickDeleteQuiz = async () => {
-        setShowQuizDeleteUser(true);
-        // let res = await deleteQuizToServer(dataDeleteQuiz.id);
-        // console.log(`check res delete:`, res)
-    }
+    // const [showQuizDeleteUser, setShowQuizDeleteUser] = useState(false);
+    // const [dataDeleteQuiz, setDataDeleteQuiz] = useState({});
+    // const handleClickDeleteQuiz = async () => {
+    //     setShowQuizDeleteUser(true);
+    //     let res = await deleteQuizToServer(dataDeleteQuiz.id);
+    //     console.log(`check res delete:`, res)
+    // }
     return (
         <div className="quiz-container p-2">
 
@@ -107,19 +108,31 @@ const ManageQuiz = (props) => {
                                 <button className='btn btn-warning' onClick={() => handleSubmitQuiz()}>Save</button>
                             </div>
                         </div>
+                        <div className="list-detail">
+                            <TableQuiz
+                                tableQuiz={tableQuiz}
+                            // handleClickDeleteQuiz={handleClickDeleteQuiz}
+                            />
+                            {/* <DeleteQuiz
+                                show={showQuizDeleteUser}
+                                setShow={setShowQuizDeleteUser}
+                            /> */}
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Update Q/A Quizzes</Accordion.Header>
+                    <Accordion.Body>
+                        <UpdateQa />
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header>Assign to Users</Accordion.Header>
+                    <Accordion.Body>
+                        <AssignToUsers />
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
-            <div className="list-detail">
-                <TableQuiz
-                    tableQuiz={tableQuiz}
-                    handleClickDeleteQuiz={handleClickDeleteQuiz}
-                />
-                <DeleteQuiz
-                    show={showQuizDeleteUser}
-                    setShow={setShowQuizDeleteUser}
-                />
-            </div>
         </div>
     )
 }

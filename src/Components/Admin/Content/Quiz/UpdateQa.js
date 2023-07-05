@@ -1,14 +1,14 @@
 import Select from 'react-select';
-import { BsFillPatchPlusFill, BsFillPatchMinusFill, BsQuestionSquare } from 'react-icons/bs';
+import { BsFillPatchPlusFill, BsFillPatchMinusFill } from 'react-icons/bs';
 import { RiImageAddFill, RiQuestionMark } from 'react-icons/ri'
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
-import { tableSocialQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuiz } from '../../../../service/apiServices';
+import { tableSocialQuiz, postCreateQuestionForQuiz, postCreateAnswerForQuiz, getQuizWithQA } from '../../../../service/apiServices';
 
-const Questions = () => {
+const UpdateQa = () => {
     const [zoomed, setZoomed] = useState(false);
     const [dataImage, setDataImage] = useState({
         imgUrl: '',
@@ -18,20 +18,45 @@ const Questions = () => {
     const [listQuiz, setLizQuiz] = useState([]);
     useEffect(() => {
         getQuizToTable();
-    }, [])
+    }, []);
+    useEffect(() => {
+        if (selectedQuiz && selectedQuiz.value) {
+            getQuizToQA();
+        }
+    }, [selectedQuiz]);
+
+    function urltoFile(url, filename, mimeType) {
+        return fetch(url)
+            .then(res => res.arrayBuffer())
+            .then(buf => new File([buf], filename, { type: mimeType }));
+    };
+    const getQuizToQA = async () => {
+        let res = await getQuizWithQA(selectedQuiz.value);
+        console.log(`check res:`, res);
+        if (res && res.EC === 0) {
+            let newQA = [];
+            for (let i = 0; i < res.DT.qa.length; i++) {
+                if (res.DT.qa[i].imageFile) {
+                    res.DT.qa[i].imageName = `Question ${res.DT.qa[i].id}.png`;
+                    res.DT.qa[i].imageFile = await urltoFile(`data:image/png, ${res.DT.qa[i].imageFile}`, `Question ${res.DT.qa[i].id}.png`, 'image/png');
+                };
+                newQA.push(res.DT.qa[i]);
+            }
+            setQuestions(newQA);
+        }
+    }
     const getQuizToTable = async () => {
         let res = await tableSocialQuiz();
         if (res && res.EC === 0) {
             let newListQuiz = res.DT.map(item => {
                 return {
                     value: item.id,
-                    label: `${item.id} - ${item.name} - ${item.description}`
+                    label: `${item.id} - ${item.name}`
                 }
             });
             setLizQuiz(newListQuiz);
         }
     }
-    // console.log(`check selectedQuiz:`, selectedQuiz)
     const [questions, setQuestions] = useState(
         [
             {
@@ -368,4 +393,4 @@ const Questions = () => {
         </div>
     )
 }
-export default Questions;
+export default UpdateQa;
