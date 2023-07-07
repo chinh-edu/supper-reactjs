@@ -1,0 +1,15 @@
+.navigation-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: antiquewhite;
+    .flex-nav {
+        gap: 20px;
+    }
+    .input-group {
+        width: 20%;
+        .form-control {
+            border-radius: 20px;
+        }
+    }
+}

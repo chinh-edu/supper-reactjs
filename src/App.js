@@ -1,28 +1,13 @@
-//Availability
 import './App.scss';
-
-// Add library
-import { Outlet } from "react-router-dom";
-
-// Add file
-import Header from './Components/Header/Header';
+import Navigation from './Components/Navigation/Navigation';
+import Banner from './Components/Banner/Banner';
 
 const App = () => {
-
   return (
-    <div className="app-container">
-      <div className='header-container'>
-        <Header />
-      </div>
-      <div className='main-container'>
-        <div className='app-app'>
-          <Outlet />
-        </div>
-      </div>
-
-    </div >
+    <div className='app-container'>
+      <Banner />
+      <Navigation />
+    </div>
   );
-
 }
-
 export default App;

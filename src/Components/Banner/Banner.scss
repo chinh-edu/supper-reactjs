@@ -1,0 +1,33 @@
+.banner-container {
+    width: 100%;
+    background-color:burlywood;
+    height: 100px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .list-banner--left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .flex {
+            display: flex;
+            color: #fff;
+            align-items: center;
+            gap: 5px;
+            .icon {
+                font-size: 21px;
+            }
+        }
+    }
+    .list-banner--right {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        .me-auto {
+           .list-baner--link {
+            color: #fff;
+           }
+        }
+     }
+}

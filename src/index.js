@@ -2,26 +2,31 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter } from "react-router-dom";
-import Layout from './Layout';
-import { store, persistor } from './redux/store';
-import { Provider } from 'react-redux';
+import { BrowserRouter, Route, Routes } from "react-router-dom"; //điều hướng trang
+// import { store, persistor } from './redux/store';
+// import { Provider } from 'react-redux';
 import 'nprogress/nprogress.css';
-import { PersistGate } from 'redux-persist/integration/react';
+// import { PersistGate } from 'redux-persist/integration/react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import "react-awesome-lightbox/build/style.css";
-
+import App from './App';
+import Admin from './Components/Admin/Admin';
+import User from './Components/User/User';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   // <React.StrictMode>
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </PersistGate>
-  </Provider>
+  // <Provider store={store}>
+  //   <PersistGate loading={null} persistor={persistor}>
+  <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<App />} />
+      <Route path='user' element={<User />} />
+      <Route path='admin' element={<Admin />} />
+    </Routes>
+  </BrowserRouter>
+  //   </PersistGate>
+  // </Provider>
   // </React.StrictMode>,
 );
 

@@ -1,8 +1,8 @@
-const User = (props) => {
+const User = () => {
     return (
-        <>
-            <div>Wellcome to User Page</div>
-        </>
+        <div className="user-container">
+            This is page User
+        </div>
     )
 }
 export default User;
