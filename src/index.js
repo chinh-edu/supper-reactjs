@@ -12,6 +12,7 @@ import "react-awesome-lightbox/build/style.css";
 import App from './App';
 import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
+import Homepage from './Components/Homepage/Homepage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -20,8 +21,10 @@ root.render(
   //   <PersistGate loading={null} persistor={persistor}>
   <BrowserRouter>
     <Routes>
-      <Route path='/' element={<App />} />
-      <Route path='user' element={<User />} />
+      <Route path='/' element={<App />}>
+        <Route index element={<Homepage />} />
+        <Route path='user' element={<User />} />
+      </Route>
       <Route path='admin' element={<Admin />} />
     </Routes>
   </BrowserRouter>

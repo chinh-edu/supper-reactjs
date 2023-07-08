@@ -5,6 +5,14 @@
     background-color: antiquewhite;
     .flex-nav {
         gap: 20px;
+        .nav-link {
+            font-size: 18px;
+            font-weight: 400;
+            color:darkred;
+        }
+        .nav-link:focus {
+            color:rgb(5, 73, 41);
+        }
     }
     .input-group {
         width: 20%;

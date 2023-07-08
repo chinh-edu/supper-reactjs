@@ -1,3 +1,5 @@
+import './User.scss'
+
 const User = () => {
     return (
         <div className="user-container">

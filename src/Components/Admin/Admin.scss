@@ -1,0 +1,14 @@
+.admin-container {
+    color: #fff;
+    .sidebar-header {
+        text-align: center;
+        padding: 12px 0;
+    }
+    .sidebar-footer {
+        padding: 30px 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+       }
+}
