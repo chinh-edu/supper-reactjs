@@ -1,14 +1,12 @@
 .admin-container {
-    color: #fff;
-    .sidebar-header {
-        text-align: center;
-        padding: 12px 0;
+    display: flex;
+    gap: 20px;
+    .sb-admin {
+        flex-shrink: 0;
     }
-    .sidebar-footer {
-        padding: 30px 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-       }
+    .ct-admin {
+        flex: 1;
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
 }

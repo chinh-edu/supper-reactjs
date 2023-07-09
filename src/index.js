@@ -13,6 +13,9 @@ import App from './App';
 import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
 import Homepage from './Components/Homepage/Homepage';
+import DashBoard from './Components/Admin/ContentAdmin/DashBoard';
+import ManageUser from './Components/Admin/ContentAdmin/ManageUser';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -25,7 +28,10 @@ root.render(
         <Route index element={<Homepage />} />
         <Route path='user' element={<User />} />
       </Route>
-      <Route path='admin' element={<Admin />} />
+      <Route path='admin' element={<Admin />}>
+        <Route index element={<DashBoard />} />
+        <Route path='manage-user' element={<ManageUser />} />
+      </Route>
     </Routes>
   </BrowserRouter>
   //   </PersistGate>

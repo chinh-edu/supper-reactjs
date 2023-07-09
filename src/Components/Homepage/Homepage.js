@@ -53,7 +53,7 @@ export default function Homepage() {
             </Carousel>
             <div className='homepage-input'>
                 <h1 className='mb-4'>Chi Nguyen</h1>
-                <button type='button' className='homepage-button mb-4'>Get's start. It's free </button>
+                <button type='button' className='homepage-button mb-4'>Get's start. It's free</button>
                 <input type="text" class="form-control" placeholder='Seacrch hight-resolution images' />
             </div>
         </div>
