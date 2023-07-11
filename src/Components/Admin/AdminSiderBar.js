@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 const AdminSiderBar = () => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
-    console.log(`check navigation:`, navigate)
     return (
         <div className='sidebar-container'>
             <ProSidebar

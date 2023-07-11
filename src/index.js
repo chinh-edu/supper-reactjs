@@ -9,6 +9,8 @@ import 'nprogress/nprogress.css';
 // import { PersistGate } from 'redux-persist/integration/react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import "react-awesome-lightbox/build/style.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
@@ -33,6 +35,18 @@ root.render(
         <Route path='manage-user' element={<ManageUser />} />
       </Route>
     </Routes>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
   </BrowserRouter>
   //   </PersistGate>
   // </Provider>
